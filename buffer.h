@@ -1,17 +1,16 @@
 #pragma once
 /*
-	File name: buffer.h
-	Compiler: MS Visual Studio 2019
-	Author: Alex Carrozzi, 040793835
-	Course: CST 8152 – Compilers, Lab Section : 011
-	Assignment: 1
-	Date: October 2nd, 2019
-	Professor: Sv.Ranev
-	Purpose: This header file provides the function declarations in the file buffer.c as well as macros for error signalling, bit-wise operations and various buffer values.
-			 A function-like macro, b_isfull() is defined using preprocessor conditionals if the including file has defined B_FULL.
-			 The buffer structure which the file buffer.c relies heavily on is also defined in this header file with 2 typedefs -- one is a pointer.
+ *	File name: buffer.h
+ *	Compiler: MS Visual Studio 2019
+ *	Author: Alex Carrozzi
+ *	Date: October 2nd, 2019
+ *	Purpose: This header file provides the function declarations in the file buffer.c as well as macros for error signalling, bit-wise operations and various buffer values.
+ *			 A function-like macro, b_isfull() is defined using preprocessor conditionals if the including file has defined B_FULL.
+ *			 The buffer structure which the file buffer.c relies heavily on is also defined in this header file with 2 typedefs -- one is a pointer.
+ *
+ *	Function list: N/A (no function definitions, only declarations)
+ */
 
-	Function list: N/A (no function definitions, only declarations)*/
 #ifndef BUFFER_H_
 #define BUFFER_H_
 
