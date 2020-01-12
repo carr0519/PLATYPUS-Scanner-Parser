@@ -1,8 +1,6 @@
 /*	File name: platy.c
  *	Purpose:This is the main program for Assignment#3 - Platypus Parser
- *  CST8152 - Compilers
- *  Version: 1.19.2
- *  Author: Svillen Ranev
+ *  Version: 1
  *  Date: 24 October 2019
  */ 
 
