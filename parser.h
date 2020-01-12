@@ -1,11 +1,7 @@
 /*	File name:	parser.h
  *	Compiler:	MS Visual Studio 2019
- *	Author:		Alex Carrozzi & Andy Ta
- *	Course:		CST 8152 - Compilers
- *	Lab Secion: 011
- *	Assignment:	3
+ *	Author:		Alex Carrozzi
  *	Date:		November Decemeber 5, 2019
- *	Professor:	Svillen Ranev
  *	Purpose:	Provides utilities required by the parser.
  *				This includes: exteral linkage to variables and functions,
  *				preprocessor directives such as include and define constants,
