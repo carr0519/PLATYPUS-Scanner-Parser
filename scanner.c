@@ -1,24 +1,20 @@
 /*	File name:	scanner.c
  *	Compiler:	MS Visual Studio 2019
- *	Author:		Alex Carrozzi & Andy Ta
- *	Course:		CST 8152 - Compilers
- *	Lab Secion: 011
- *	Assignment:	2
- *	Date:		November 2, 2019
+ *	Author:		Alex Carrozzi
  *	Professor:	Sv Ranev
  *	Purpose:	Implements a token-driven and DFA-driven scanner hybrid which is used
  *				to generate Tokens as defined by the PLATYPUS language specification document.
  *	Functions:	scanner_init()
- *				malar_next_token()
- *				get_next_state()
- *				char_class()
- *				aa_func02()
- *				aa_func03()
- *				aa_func08()
- *				aa_func05()
- *				aa_func10()
- *				aa_func11()
- *				iskeyword()			   
+ *			malar_next_token()
+ *			get_next_state()
+ *			char_class()
+ *			aa_func02()
+ *			aa_func03()
+ *			aa_func08()
+ *			aa_func05()
+ *			aa_func10()
+ *			aa_func11()
+ *			iskeyword()			   
  */
 
 
@@ -94,7 +90,7 @@ int scanner_init(pBuffer psc_buf) {
 /*	Purpose:	Reads from the input buffer one char at a time and returns a Token
  *				structure once it finds a token pattern which matches a lexeme found
  *				in the stream of input symbols.
- *	Author:		Alex Carrozzi & Andy Ta
+ *	Author:		Alex Carrozzi
  *	History / Versions:	1.0
  *	Called functions:	b_getc(), b_retract(), b_eob(), sprintf(), b_mark(), get_next_state(), 
  *						b_getcoffset(), b_allocate(), strcpy(), b_addc(), b_free()
@@ -326,7 +322,6 @@ Token malar_next_token(void)
 
 /*
  *	Purpose:	Determines the label (int) of the next state according to the DFA.
- *	Author:		Provided by the Professor
  *	History / Versions:	1.0
  *	Called functions:	char_class(), assert(), printf(), exit()
  *	Parameters:		state: int, the current state of the lexeme.
@@ -383,7 +378,7 @@ int char_class(char c)
 
 /*
  *	Purpose:	Accepting state function for arithmetic variable identifers and keywords (AVID / KW).
- *	Author:		Andy Ta
+ *	Author:		Alex Carrozzi
  *	History / Versions:	1.0
  *	Called functions:	iskeyword(), strncpy(), strlen()
  *	Parameters:		lexeme: char*, pointer to the starting address of the lexeme.
@@ -411,7 +406,7 @@ Token aa_func02(char* lexeme)
 
 /*
  *	Purpose:	Accepting state function for string variable identifers (SVID).
- *	Author:		Andy Ta
+ *	Author:		Alex Carrozzi
  *	History / Versions:	1.0
  *	Called functions:	strlen(), strncpy(), strcpy()
  *	Parameters:		lexeme: char*, pointer to the starting address of the lexeme.
@@ -527,7 +522,7 @@ Token aa_func10(char* lexeme)
 
 /*
  *	Purpose:	Accepting state for error state -- generates an error token.
- *	Author:		Andy Ta
+ *	Author:		Alex Carrozzi
  *	History / Versions:	1.0
  *	Called functions:	strlen(), strncpy(), strcpy()
  *	Parameters:		lexeme: char*, pointer to the starting address of the lexeme.
@@ -555,7 +550,7 @@ Token aa_func11(char* lexeme)
 
 /*
  *	Purpose:	Determines whether the scanner has found a keyword as defined in the array kw_lookup[].
- *	Author:		Andy Ta
+ *	Author:		Alex Carrozzi
  *	History / Versions:	1.0
  *	Called functions:	strcmp()
  *	Parameters:		lexeme:	char*, pointer to the starting address of the lexeme.
