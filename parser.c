@@ -1,16 +1,12 @@
 /*	File name:	parser.c
  *	Compiler:	MS Visual Studio 2019
- *	Author:		Alex Carrozzi & Andy Ta
- *	Course:		CST 8152 - Compilers
- *	Lab Secion: 011
- *	Assignment:	3
+ *	Author:		Alex Carrozzi
  *	Date:		November Decemeber 5, 2019
- *	Professor:	Svillen Ranev
  *	Purpose:	Implements a recursive descent predictive parser for the PLATYPUS
  *				language using a combination of function calls for each 
  *				non-terminal and it's production as it's body. The parser calls 
  *				on the scanner to receive tokens (one at a time), and checks if 
- *				they are appear in a valid sequence (checking for semantic correctness).
+ *				they are appear in a valid sequence (checking for syntactic correctness).
  *	
  *	Functions:	void match(int pr_token_code, int pr_token_attribute);
  *				void syn_eh(int sync_token_code);
@@ -103,12 +99,13 @@ void match(int pr_token_code, int pr_token_attribute)
 		lookahead = malar_next_token();
 		++synerrno;
 	}
-}
+}
+
 
 /*	Purpose:	A simple panic mode error recovery. The parser will keep fetching 
  *				and discarding tokens from the scanner until the token code 
  *				matches the code passed in or until it reaches SEOF_T.
- *	Author:		Andy Ta
+ *	Author:		Alex Carrozzi
  *	History / Versions:	1.0
  *	Called functions:	syn_printe(), malar_next_token(), exit()
  *	Parameters:		sync_token_code: int, the token code which is to be matched
@@ -139,7 +136,6 @@ void syn_eh(int sync_token_code)
 
 /*	Purpose:	An error printing function which display a syntax error message along with
 				the token code and it's attribute (if relevant) from the scanner.
- *	Author:		Prof. Sv Ranev
  *	History / Versions:	1.0
  *	Called functions:	printf()
  *	Parameters:		None
@@ -233,7 +229,6 @@ void gen_incode(char* msg)
 
 /*	Purpose:	Initiates the parsing process. Retrieves the first token from 
  *				the scanner and then calls the start symbol function program()
- *	Author:		Prof. Sv Ranev
  *	History / Versions:	1.0
  *	Called functions:	malar_next_token(), program(), match(), gen_incode()
  *	Parameters:		None
@@ -261,8 +256,6 @@ void parser(void)
  *	  PLATYPUS { <opt_statements> }
  *
  *	FIRST (<program>) = { KW_T(PLATYPUS) }
- *
- *	Author:	Prof Sv Ranev
  */
 void program(void)
 {
@@ -279,9 +272,7 @@ void program(void)
  *		| empty
  *
  *	FIRST (<opt_statements>) = { AVID_T, SVID_T, KW_T(IF), KW_T(WHILE),
- *								 KW_T(READ), KW_T(WRITE), empty }
- *
- *	Author:	Prof Svillen
+ *								 KW_T(READ), KW_T(WRITE), empty 
  */
 void opt_statements(void) 
 {
@@ -297,10 +288,13 @@ void opt_statements(void)
 			statements();
 			break;
 		}
-	default: /* empty string – optional statements */;
+	default: /* empty string Â– optional statements */;
 		gen_incode("PLATY: Opt_statements parsed");
 	}
-}/*	<statements> ->
+}
+
+
+/*	<statements> ->
  *		  <statement> 
  *		| <statements> <statement>
  *
@@ -310,8 +304,6 @@ void opt_statements(void)
  *		<statement> <statements_p>
  *
  *	FIRST (<statements>) = { AVID_T, SVID_T, KW_T(IF), KW_T(WHILE), KW_T(READ), KW_T(WRITE) }
- *
- *	Author: Andy Ta
  */
 void statements(void)
 {
@@ -325,8 +317,6 @@ void statements(void)
  *		| empty
  *
  *	FIRST (<statements_p>) = { AVID_T, SVID_T, KW_T(IF), KW_T(WHILE), KW_T(READ), KW_T(WRITE), empty }
- *
- *	Author: Andy Ta
  */
 void statements_p(void) 
 {
@@ -355,8 +345,6 @@ void statements_p(void)
  *		| <output_statement>
  *
  *	FIRST (<statement>) = { AVID_T, SVID_T, KW_T(IF), KW_T(WHILE), KW_T(READ), KW_T(WRITE) }
- *
- *	Author: Alex Carrozzi
  */
 void statement(void)
 {
@@ -382,8 +370,6 @@ void statement(void)
  *		<assignment_expression> ;
  *
  *	FIRST (<assignment_statement>) = { AVID_T, SVID_T }
- *
- *	Author: Alex Carrozzi
  */
 void assignment_statement(void)
 {
@@ -398,8 +384,6 @@ void assignment_statement(void)
  *		THEN { <opt_statements> } ELSE { <opt_statements> } ;
  *
  *	FIRST (<selection statement>) = { KW_T(IF) }
- *
- *	Author: Andy Ta
  */
 void selection_statement(void) 
 {
@@ -417,8 +401,6 @@ void selection_statement(void)
  *		WHILE <pre_condition> ( <conditional_expression> ) REPEAT { <statements> } ;
  *
  *	FIRST (<iteration_statement>) = { KW_T(WHILE) }
- *
- *	Author: Alex Carrozzi
  */
 void iteration_statement(void)
 {	
@@ -435,8 +417,6 @@ void iteration_statement(void)
  *		| SVID_T = <string_expression>
  *
  *	FIRST (<assignment_expression>) = { AVID_T, SVID_T }
- *
- *	Author: Alex Carrozzi
  */
 void assignment_expression(void) 
 {	
@@ -461,8 +441,6 @@ void assignment_expression(void)
  *		READ ( <variable_list> ) ;
  *
  *  FIRST (<input_statement>) = { KW_T(READ) }
- *
- *	Author: Andy Ta
  */
 void input_statement(void) 
 {
@@ -484,8 +462,6 @@ void input_statement(void)
  *		WRITE ( <output_list> ) ;
  *
  *	FIRST (<output_statement>) = { KW_T(WRITE) }
- *
- *	Author: Andy Ta
  */
 void output_statement(void)
 {
@@ -503,8 +479,6 @@ void output_statement(void)
  *		| STR_T
  *
  *	FIRST (<output_list>) = { SVID_T, AVID_T, STR_T, empty }
- *
- *	Author: Alex Carrozzi
  */
 void output_list(void) 
 {
@@ -524,8 +498,6 @@ void output_list(void)
  *		| empty
  *
  *  FIRST (<opt_variable_list>) = { SVID_T , AVID_T , empty }
- *
- *	Author: Alex Carrozzi
  */
 void opt_variable_list(void) 
 {
@@ -539,8 +511,6 @@ void opt_variable_list(void)
  *		| FALSE
  *
  *	FIRST(<pre_condition>) = { KW_T(TRUE), KW_T(FALSE) }
- *
- *	Author: Alex Carrozzi
  */
 void pre_condition(void) 
 {
@@ -565,8 +535,6 @@ void pre_condition(void)
  *		<variable_identifier> <variable_list_p>
  *
  *  FIRST (<variable_list>) = { SVID_T, AVID_T }
- *
- *	Author: Andy Ta
  */
 void variable_list(void) 
 {
@@ -581,8 +549,6 @@ void variable_list(void)
  *		| empty
  *
  *  FIRST (<variable_list_p>) = { COM_T, empty }
- *
- *	Author: Andy Ta
  */
 void variable_list_p(void) 
 {
@@ -606,8 +572,6 @@ void variable_list_p(void)
  *		| AVID_T
  *
  *  FIRST (<variable_identifier>) = { SVID_T, AVID_T }
- *
- *	Author: Alex Carrozzi
  */
 void variable_identifier(void)
 {
@@ -624,8 +588,6 @@ void variable_identifier(void)
  *		>  |  <  |  == |  <>  
  *
  *  FIRST (<relational_operator>) = { REL_OP_T(>), REL_OP_T(<), REL_OP_T(==), REL_OP_T(<>) }
- *
- *	Author: Alex Carrozzi
  */
 void relational_operator(void) 
 {
@@ -641,8 +603,6 @@ void relational_operator(void)
  *		| <additive_arithmetic_expression>	
  *
  *	FIRST (<arithmetic_expression>) = { ART_OP_T(PLUS), ART_OP_T(MINUS), AVID_T, FPL_T, INL_T, LPR_T }
- *
- *	Author: Andy Ta
  */
 void arithmetic_expression(void)
 {
@@ -671,8 +631,6 @@ void arithmetic_expression(void)
  *		| + <primary_arithmetic_expression>
  *
  *  FIRST (<unary_arithmetic_expression>) = { ART_OP_T(PLUS), ART_OP_T(MINUS) }
- *
- *	Author: Alex Carrozzi
  */
 void unary_arithmetic_expression(void) 
 {
@@ -710,8 +668,6 @@ void unary_arithmetic_expression(void)
  *		<multiplicative_arithmetic_expression> <additive_arithmetic_expression_p>
  *
  *  FIRST (<additive_arithmetic_expression>) = { AVID_T, FPL_T, INL_T, LPR_T }
- *
- *	Author: Andy Ta
  */
 void additive_arithmetic_expression(void) 
 {
@@ -726,8 +682,6 @@ void additive_arithmetic_expression(void)
  *		| empty
  *
  *	FIRST (<additive_arithmetic_expression_p>) = { ART_OP_T(PLUS), ART_OP_T(MINUS), empty }
- *
- *	Author: Alex Carrozzi
  */
 void additive_arithmetic_expression_p(void)
 {
@@ -758,8 +712,6 @@ void additive_arithmetic_expression_p(void)
  *		<primary_arithmetic_expression> <multiplicative_arithmetic_expression_p>
  *
  *	FIRST (<multiplicative_arithmetic_expression>) = { AVID_T, FPL_T, INL_T, LPR_T }
- *
- *	Author: Andy Ta
  */
 void multiplicative_arithmetic_expression(void)
 {
@@ -774,8 +726,6 @@ void multiplicative_arithmetic_expression(void)
  *		| empty
  *	
  *	FIRST (<multiplicative arithmetic expression_p>) = { ART_OP_T(MULT), ART_OP_T(DIV), empty }
- *
- *	Author: Alex Carrozzi
  */
 void multiplicative_arithmetic_expression_p(void)
 {
@@ -802,8 +752,6 @@ void multiplicative_arithmetic_expression_p(void)
  *		| ( <arithmetic_expression> )
  *
  *  FIRST (<primary_arithmetic_expression>) = { AVID_T, FPL_T, INL_T, LPR_T }
- *
- *	Author: Alex Carrozzi
  */
 void primary_arithmetic_expression(void)
 {
@@ -834,8 +782,6 @@ void primary_arithmetic_expression(void)
  *		<primary_string_expression> <string_expression_p>
  *
  *  FIRST (<string expression>) = { SVID_T, STR_T }
- *
- *	Author: Andy Ta
  */
 void string_expression(void)
 {
@@ -850,8 +796,6 @@ void string_expression(void)
  *		| empty
  *	
  *	FIRST (<string expression_p>) = { SCC_OP_T, empty }
- *
- *	Author: Andy Ta
  */
 void string_expression_p(void)
 {
@@ -868,8 +812,6 @@ void string_expression_p(void)
  *		| STR_T
  *
  *  FIRST (<primary_string_expression>) = { SVID_T, STR_T } 
- *
- *	Author: Alex Carrozzi
  */
 void primary_string_expression(void)
 {
@@ -892,8 +834,6 @@ void primary_string_expression(void)
  *		<logical_OR_expression>
  *
  *	FIRST (<conditional_expression>) = { AVID_T, FPL_T, INL_T, SVID_T, STR_T }
- *
- *	Author: Andy Ta
  */
 void conditional_expression(void)
 {
@@ -912,8 +852,6 @@ void conditional_expression(void)
  *		<logical_AND_expression> <logical_OR_expression_p>
  *
  *	FIRST (<logical_OR_expression>) = { AVID_T, FPL_T, INL_T,  SVID_T, STR_T }
- *
- *	Author: Andy Ta
  */
 void logical_OR_expression(void)
 {
@@ -927,8 +865,6 @@ void logical_OR_expression(void)
  *		| empty
  *	
  *	FIRST (<logical_OR_expression_p>) = { LOG_OP_T(.OR.), empty }
- *
- *	Author: Alex Carrozzi
  */
 void logical_OR_expression_p(void)
 {
@@ -951,8 +887,6 @@ void logical_OR_expression_p(void)
  *		<relational_expression> <logical_AND_expression_p>
  *
  *	FIRST (<logical_AND_expression>) = { AVID_T, FPL_T, INL_T,  SVID_T, STR_T }
- *
- *	Author: Alex Carrozzi
  */
 void logical_AND_expression(void)
 {
@@ -966,8 +900,6 @@ void logical_AND_expression(void)
  *		| empty
  *
  *	FIRST (<logical_AND_expression_p>) = { LOG_OP_T(.AND.), empty }
- *
- *	Author: Andy Ta
  */
 void logical_AND_expression_p(void)
 {
@@ -997,8 +929,6 @@ void logical_AND_expression_p(void)
  *		| <primary_s_relational_expression> <relational_operator> <primary_s_relational_expression>
  *
  *  FIRST (<relational_expression>) = { AVID_T, FPL_T, INL_T, SVID_T, STR_T }
- *
- *	Author: Alex Carrozzi
  */
 void relational_expression(void)
 {
@@ -1026,8 +956,6 @@ void relational_expression(void)
  *		| INL_T
  *
  *	FIRST (<primary_a_relational_expression>) = { AVID_T, FPL_T, INL_T }
- *
- *	Author: Andy Ta
  */
 void primary_a_relational_expression(void)
 {
@@ -1046,8 +974,6 @@ void primary_a_relational_expression(void)
  *		<primary_string_expression>
  *
  *	FIRST (<primary_s_relational_expression>) = { SVID_T, STR_T }
- *
- *	Author: Andy Ta
  */
 void primary_s_relational_expression(void)
 {
